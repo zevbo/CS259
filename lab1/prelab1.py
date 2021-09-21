@@ -7,20 +7,33 @@ rospy.init_node('prelab1')
 
 armCmd = rospy.Publisher('/arm_controller/command',JointTrajectory,queue_size=10)
 
-def test(secs):
-    p = JointTrajectoryPoint()
-    p.positions = [1,-1,-1,-1,-1,1]
-    p.velocities = [0,0,0,0,0,0]
-    p.time_from_start.secs = 10
+def run():
+    def make_points(interval, positions):
+        points = []
+        time = 0
+        for pos in positions:
+            time += interval
+            p = JointTrajectoryPoint()
+            p.positions = pos
+            p.velocities = [0,0,0,0,0,0]
+            p.time_from_start.secs = time
+            points.append(p)
+        return points
 
     testMsg = JointTrajectory()
-    testMsg.points = [p]
+    positions = [[2,0,0,0,0,0],[2,-2,0,0,0,0],[2,-2,2,0,0,0],[2,-2,2,3,0,0]]
+    testMsg.points = make_points(3, positions)
     testMsg.joint_names = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint', 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
 
-
+    rate = rospy.Rate(10)
     print(testMsg)
-    armCmd.publish(testMsg)
+   
+    ticks = 0
+    while ticks < 5:
+        armCmd.publish(testMsg)
+        rate.sleep()
+        ticks += 1
 
-    time.sleep(secs)
+   # time.sleep(secs)
 
-test(60)
+run()
