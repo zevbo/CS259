@@ -29,7 +29,7 @@ def run():
     print(testMsg)
    
     ticks = 0
-    while ticks < 5:
+    while ticks < 20:
         armCmd.publish(testMsg)
         rate.sleep()
         ticks += 1
