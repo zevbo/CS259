@@ -5,7 +5,7 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 rospy.init_node('prelab1')
 
-armCmd = rospy.Publisher('/arm_controller/command',JointTrajectory,queue_size=10)
+armCmd = rospy.Publisher('/scaled_pos_joint_traj_controller/command',JointTrajectory,queue_size=10)
 
 def run():
     def make_points(interval, positions):
@@ -21,7 +21,7 @@ def run():
         return points
 
     testMsg = JointTrajectory()
-    positions = [[2,0,0,0,0,0],[2,-2,0,0,0,0],[2,-2,2,0,0,0],[2,-2,2,3,0,0]]
+    positions = [[0,0,0,0,0,0],[-1,0,0,0,0,0],[-1,-1,0,0,0,0],[-1,-1,2,0,0,0],[-1,-1,2,3,0,0]]
     testMsg.points = make_points(3, positions)
     testMsg.joint_names = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint', 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
 

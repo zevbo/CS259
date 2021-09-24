@@ -3,9 +3,9 @@ import rospy
 import time
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
-rospy.init_node('prelab1')
+rospy.init_node('prelab2')
 
-armCmd = rospy.Publisher('/arm_controller/command',JointTrajectory,queue_size=10)
+armCmd = rospy.Publisher('/scaled_pos_joint_traj_controller/command',JointTrajectory,queue_size=10)
 
 def run():
     def make_points(interval, positions):
