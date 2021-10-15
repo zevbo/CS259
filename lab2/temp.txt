@@ -1,0 +1,6 @@
+t01 = dh_matrix(0, 0, h1, t1 + math.pi)
+t12 = dh_matrix(-math.pi / 2, 0, 0, t2)
+t23 = dh_matrix(0, l1, w1, t3)
+t34 = dh_matrix(0, l2, 0, t4)
+t45 = dh_matrix(-math.pi / 2, 0, w2, t5)
+t56 = dh_matrix(math.pi / 2, 0, h2, t6)
