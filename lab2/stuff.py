@@ -65,17 +65,20 @@ def print_matrix(mat):
 
 def lp_cross(w):
     return np.array([
-        [0, w[2], -w[1]],
-        [-w[2], 0, w[0]],
-        [w[1], w[0], 0]
+        [0, -w[2], w[1]],
+        [w[2], 0, -w[0]],
+        [-w[1], w[0], 0]
     ])
 
 
 def so3_log(r):
-    theta = math.acos((r[1][1] + r[2][2] + r[3][3] - 1) / 2)
-    w1 = (r[2][1] - r[1][2]) / math.sin(theta)
-    w2 = (r[0][2] - r[2][0]) / math.sin(theta)
-    w3 = (r[1][0] - r[0][1]) / math.sin(theta)
+    theta = math.acos((r[0][0] + r[1][1] + r[2][2] - 1) / 2)
+
+    def get_w(i1, i2):
+        return (r[i1][i2] - r[i2][i1]) / (2 * math.sin(theta))
+    w1 = get_w(2, 1)
+    w2 = get_w(0, 2)
+    w3 = get_w(1, 0)
     return (np.array([w1, w2, w3]), theta)
 
 
@@ -94,8 +97,9 @@ def se3_log(t):
     i = id(3)
     g_inv = (1 / theta) * i - (1 / 2) * w_m + (1 / theta -
                                                (1 / 2) / math.tan(theta / 2)) * np.dot(w_m, w_m)
-    v = np.dot(g_inv, p)
-    return w, v
+    v = np.transpose(np.dot(g_inv, p))[0]
+    screw = np.concatenate((w, v), axis=0)
+    return screw, theta
 
 
 def so3_exp(w, theta):
@@ -104,6 +108,7 @@ def so3_exp(w, theta):
     return i + math.sin(theta) * w_m + (1 - math.cos(theta)) * np.dot(w_m, w_m)
 
 
+## Vertified: Se3_log(se3_exp(s, t)) = s, t
 def se3_exp(screw, theta):
     w = screw[0:3]
     v = screw[3:]
@@ -111,7 +116,8 @@ def se3_exp(screw, theta):
     i = id(3)
     w_m = lp_cross(w)
     top_right = np.dot(i * theta + (1 - math.cos(theta)) *
-                       w_m + (theta - math.sin(theta)) * np.dot(w_m, w_m))
+                       w_m + (theta - math.sin(theta)) *
+                       np.dot(w_m, w_m), np.transpose(np.array([v])))
     top = np.concatenate((top_left, top_right), axis=1)
     bot = np.array([[0, 0, 0, 1]])
     return np.concatenate((top, bot), axis=0)
