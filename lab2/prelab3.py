@@ -18,13 +18,13 @@ bs = [b_1, b_2, b_3, b_4, b_5, b_6]
 
 def calc_tsb_exp(thetas):
     m = np.array([
-        [0, -1, 0, -(l1 + l2)],
+        [1, 0, 0, -(l1 + l2)],
         [0, 0, -1, -(w1 + w2)],
-        [1, 0, 0, h1 - h2],
+        [0, 1, 0, h1 - h2],
         [0, 0, 0, 1]
     ])
     exps = [se3_exp(b, theta) for (b, theta) in zip(bs, thetas)]
-    return matmul(m, *exps)
+    return np.dot(m, matmul(*exps))
 
 
 def calc_j(thetas):
@@ -33,9 +33,6 @@ def calc_j(thetas):
     jacobian_tp = []
     for b, theta in zip(reversed(bs), reversed(thetas)):
         curr_transform = t_adjoint(curr_t)
-        print("b")
-        print(curr_transform)
-        print(b)
         jacobian_tp.append(np.dot(curr_transform, b))
         curr_t = np.dot(curr_t, se3_exp(b, -1 * theta))
 
@@ -43,13 +40,11 @@ def calc_j(thetas):
 
 
 def get_vb(thetas, t_goal, e_w=0.01, e_v=1):
-    result = np.dot(np.linalg.inv(calc_tsb_exp(thetas)), t_goal)
+    result = np.dot(np.linalg.inv(calc_tsb(*thetas)), t_goal)
     screw, theta = se3_log(result)
     e_twist = screw * theta
     w = e_twist[0:3]
     v = e_twist[3:]
-    print(np.linalg.norm(v))
-    assert(np.linalg.norm(v) < 50)
     if np.linalg.norm(w) < e_w and np.linalg.norm(v) < e_v:
         return thetas
     else:
@@ -58,8 +53,23 @@ def get_vb(thetas, t_goal, e_w=0.01, e_v=1):
         return get_vb(new_thetas, t_goal, e_w, e_v)
 
 
-def test():
-    theta1 = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7]
-    theta2 = [0.21, 0.31, 0.41, 0.51, 0.61, 0.71]
-    t_goal = calc_tsb_exp(theta1)
-    return get_vb(theta2, t_goal, 0.01, 0.01)
+def test(theta, delta):
+    theta_guess = theta + delta
+    t_goal = calc_tsb(*theta)
+    return get_vb(theta_guess, t_goal, 0.01, 0.01)
+
+
+def test2():
+    m = np.array([
+        [1, 0, 0, -(l1 + l2)],
+        [0, 0, -1, -(w1 + w2)],
+        [0, 1, 0, h1 - h2],
+        [0, 0, 0, 1]
+    ])
+    m_i = np.linalg.inv(m)
+    thetas_v = [[1 if i == j else 0 for i in range(6)] for j in range(6)]
+    for thetas in thetas_v:
+        print(np.dot(m_i, calc_tsb(*thetas)))
+    print("NOW BAD")
+    for thetas in thetas_v:
+        print(np.dot(m_i, calc_tsb_exp(thetas)))

@@ -28,7 +28,7 @@ def calc_tsb(t1, t2, t3, t4, t5, t6):
     t23 = dh_matrix(0, l2, 0, t3)
     t34 = dh_matrix(-math.pi / 2, 0, w1, t4)
     t45 = dh_matrix(math.pi / 2, 0, h2, t5)
-    t56 = dh_matrix(0, 0, w2, t6 - math.pi / 2)
+    t56 = dh_matrix(0, 0, w2, t6 + math.pi)
     #print("transformations: ")
     return matmul(t01, t12, t23, t34, t45, t56)
 
