@@ -73,6 +73,8 @@ def lp_cross(w):
 
 def so3_log(r):
     theta = math.acos((r[0][0] + r[1][1] + r[2][2] - 1) / 2)
+    if (math.sin(theta) == 0):
+        return np.array([0, 0, 0]), theta
 
     def get_w(i1, i2):
         return (r[i1][i2] - r[i2][i1]) / (2 * math.sin(theta))
@@ -90,14 +92,16 @@ def id(n):
 
 
 def se3_log(t):
-    r = t[0:3][0:3]
-    p = np.array([[t[0][3]], [t[1][3]], [t[2][3]]])
+    r = t[0:3, 0:3]
+    p = t[0:3, 3]
     w, theta = so3_log(r)
+    if theta == 0:
+        return np.array([0, 0, 0, 0, 0, 0]), theta
     w_m = lp_cross(w)
     i = id(3)
     g_inv = (1 / theta) * i - (1 / 2) * w_m + (1 / theta -
                                                (1 / 2) / math.tan(theta / 2)) * np.dot(w_m, w_m)
-    v = np.transpose(np.dot(g_inv, p))[0]
+    v = np.transpose(np.dot(g_inv, p))
     screw = np.concatenate((w, v), axis=0)
     return screw, theta
 
@@ -121,3 +125,20 @@ def se3_exp(screw, theta):
     top = np.concatenate((top_left, top_right), axis=1)
     bot = np.array([[0, 0, 0, 1]])
     return np.concatenate((top, bot), axis=0)
+
+
+def t_adjoint(t):
+    r = t[0:3, 0:3]
+    p = t[0:3, 3]
+    p_m = lp_cross(p)
+    bot_left = np.dot(p_m, r)
+    top_right = np.array([[0] * 3 for _ in range(3)])
+    top = np.concatenate((r, top_right), axis=1)
+    bot = np.concatenate((bot_left, r), axis=1)
+    adj = np.concatenate((top, bot), axis=0)
+    return adj
+
+
+def pseduo_inv(m):
+    m_tp = np.transpose(m)
+    return np.dot(m_tp, np.linalg.inv(np.dot(m, m_tp)))
