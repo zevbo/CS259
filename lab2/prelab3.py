@@ -40,17 +40,31 @@ def calc_j(thetas):
 
 
 def get_vb(thetas, t_goal, e_w=0.01, e_v=1):
-    result = np.dot(np.linalg.inv(calc_tsb(*thetas)), t_goal)
-    screw, theta = se3_log(result)
-    e_twist = screw * theta
-    w = e_twist[0:3]
-    v = e_twist[3:]
-    if np.linalg.norm(w) < e_w and np.linalg.norm(v) < e_v:
-        return thetas
+    while(True):
+        result = np.dot(np.linalg.inv(calc_tsb(*thetas)), t_goal)
+        screw, theta = se3_log(result)
+        e_twist = screw * theta
+        w = e_twist[0:3]
+        v = e_twist[3:]
+        if np.linalg.norm(w) < e_w and np.linalg.norm(v) < e_v:
+            return thetas
+        else:
+            jacobian = calc_j(thetas)
+            thetas += np.dot(pseduo_inv(jacobian), e_twist)
+
+
+def normalize_angle(rad):
+    reg = rad % (2 * 3.14159)
+    deg = reg * 180 / 3.14159
+    if (deg > 180):
+        return deg - 360
     else:
-        jacobian = calc_j(thetas)
-        new_thetas = thetas + np.dot(pseduo_inv(jacobian), e_twist)
-        return get_vb(new_thetas, t_goal, e_w, e_v)
+        return deg
+
+
+def get_vb_normalize(thetas, t_goal):
+    real_thetas = get_vb(thetas, t_goal)
+    return [normalize_angle(theta) for theta in real_thetas]
 
 
 def test(theta, delta):
