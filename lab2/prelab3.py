@@ -3,10 +3,6 @@ import numpy as np
 from stuff import *
 
 
-def trap_arr(arr):
-    return np.transpose(np.array(arr))
-
-
 b_1 = trap_arr([0, 1, 0, w1 + w2, 0, l1 + l2])
 b_2 = trap_arr([0, 0, 1, h2, -(l1 + l2), 0])
 b_3 = trap_arr([0, 0, 1, h2, -l2, 0])
@@ -27,18 +23,6 @@ def calc_tsb_exp(thetas):
     return np.dot(m, matmul(*exps))
 
 
-def calc_j(thetas):
-
-    curr_t = id(4)
-    jacobian_tp = []
-    for b, theta in zip(reversed(bs), reversed(thetas)):
-        curr_transform = t_adjoint(curr_t)
-        jacobian_tp.append(np.dot(curr_transform, b))
-        curr_t = np.dot(curr_t, se3_exp(b, -1 * theta))
-
-    return trap_arr(list(reversed(jacobian_tp)))
-
-
 def get_vb(thetas, t_goal, e_w=0.01, e_v=1):
     while(True):
         result = np.dot(np.linalg.inv(calc_tsb(*thetas)), t_goal)
@@ -49,7 +33,7 @@ def get_vb(thetas, t_goal, e_w=0.01, e_v=1):
         if np.linalg.norm(w) < e_w and np.linalg.norm(v) < e_v:
             return thetas
         else:
-            jacobian = calc_j(thetas)
+            jacobian = calc_body_j(thetas, bs)
             thetas += np.dot(pseduo_inv(jacobian), e_twist)
 
 
@@ -64,7 +48,7 @@ def normalize_angle(rad):
 
 def get_vb_normalize(thetas, t_goal):
     real_thetas = get_vb(thetas, t_goal)
-    return [normalize_angle(theta) for theta in real_thetas]
+    return [round(normalize_angle(theta) * 100) / 100 for theta in real_thetas]
 
 
 def test(theta, delta):

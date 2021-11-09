@@ -2,6 +2,7 @@ import numpy as np
 from numpy.lib.index_tricks import r_
 from stuff import *
 import math
+import itertools
 
 w1 = 133
 w2 = 99.6
@@ -29,12 +30,24 @@ def calc_tsb(t1, t2, t3, t4, t5, t6):
     t34 = dh_matrix(-math.pi / 2, 0, w1, t4)
     t45 = dh_matrix(math.pi / 2, 0, h2, t5)
     t56 = dh_matrix(0, 0, w2, t6 + math.pi)
+    ts = [t01, t12, t23, t34, t45, t56]
+    last = id(4)
+    for t in itertools.chain(ts, [shift_to_t([0, 0, 15])]):
+        last = np.dot(last, t)
+        x = -1 * last[1][3]
+        y = last[2][3] + 240
+        print(x, end=", ")
+        print(y)
     #print("transformations: ")
-    return matmul(t01, t12, t23, t34, t45, t56)
+    return matmul(*ts)
 
 
 def to_rad(deg):
     return deg * math.pi / 180
+
+
+def calc_tsb_deg(degs):
+    return calc_tsb(*map(to_rad, degs))
 
 
 def eof_pos(t1, t2, t3, t4, t5, t6):

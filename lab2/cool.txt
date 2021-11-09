@@ -1,0 +1,3 @@
+Cos[b] (-0.5 Cos[d - e] - 0.5 Cos[e] + 
+    0.5 Cos[d + e] + 0.5 Cos[2 d + e]) Sin[
+   c + d + e]

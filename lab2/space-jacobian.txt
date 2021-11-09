@@ -1,0 +1,56 @@
+Clear[a]
+Clear[b]
+Clear[c]
+Clear[d]
+Clear[e]
+Clear[L]
+
+r11 = Simplify[0]
+r12 = Simplify[Sin[a]]
+r13 = Simplify[-Cos[a]*Cos[b]]
+r14 = Simplify[-Cos[a]*Cos[b]]
+r15 = Simplify[-Cos[a]*Cos[b]]
+r16 = Simplify[Cos[e]*(Cos[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c]) - Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b])) - Sin[e]*(Cos[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) + Sin[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c]))]
+
+r21 = Simplify[0]
+r22 = Simplify[Cos[a]]
+r23 = Simplify[Cos[b]*Sin[a]]
+r24 = Simplify[Cos[b]*Sin[a]]
+r25 = Simplify[Cos[b]*Sin[a]]
+r26 = Simplify[Cos[e]*(Cos[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]) - Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b])) - Sin[e]*(Cos[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) + Sin[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]))]
+
+r31 = Simplify[1]
+r32 = Simplify[0]
+r33 = Simplify[-Sin[b]]
+r34 = Simplify[-Sin[b]]
+r35 = Simplify[-Sin[b]]
+r36 = Simplify[Cos[e]*(Cos[b]*Cos[c]*Sin[d] + Cos[b]*Cos[d]*Sin[c]) + Sin[e]*(Cos[b]*Cos[c]*Cos[d] - Cos[b]*Sin[c]*Sin[d])]
+
+r41 = Simplify[0]
+r42 = Simplify[0]
+r43 = Simplify[0]
+r44 = Simplify[-L*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b])]
+r45 = Simplify[Cos[b]*Sin[a]*(L*Cos[b]*Cos[c]*Sin[d] + L*Cos[b]*Sin[c]*(Cos[d] - 1)) - 2*L*(Cos[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) + Sin[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])) - Sin[b]*(L*Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) - L*(Cos[d] - 1)*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]))]
+r46 = Simplify[(Cos[e]*(Cos[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]) - Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b])) - Sin[e]*(Cos[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) + Sin[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c])))*(2*L*Sin[e]*(Cos[b]*Cos[c]*Cos[d] - Cos[b]*Sin[c]*Sin[d]) + 2*L*(Cos[e] - 1)*(Cos[b]*Cos[c]*Sin[d] + Cos[b]*Cos[d]*Sin[c]) + L*Cos[b]*Cos[c]*Sin[d] + L*Cos[b]*Sin[c]*(Cos[d] - 1)) + (Cos[e]*(Cos[b]*Cos[c]*Sin[d] + Cos[b]*Cos[d]*Sin[c]) + Sin[e]*(Cos[b]*Cos[c]*Cos[d] - Cos[b]*Sin[c]*Sin[d]))*(2*L*Sin[e]*(Cos[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) + Sin[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c])) + L*Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) - 2*L*(Cos[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]) - Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]))*(Cos[e] - 1) - L*(Cos[d] - 1)*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]))]
+
+r51 = Simplify[0]
+r52 = Simplify[0]
+r53 = Simplify[0]
+r54 = Simplify[-L*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b])]
+r55 = Simplify[Sin[b]*(L*Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) - L*(Cos[d] - 1)*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])) - 2*L*(Cos[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) + Sin[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c])) + Cos[a]*Cos[b]*(L*Cos[b]*Cos[c]*Sin[d] + L*Cos[b]*Sin[c]*(Cos[d] - 1))]
+r56 = Simplify[- (Cos[e]*(Cos[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c]) - Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b])) - Sin[e]*(Cos[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) + Sin[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])))*(2*L*Sin[e]*(Cos[b]*Cos[c]*Cos[d] - Cos[b]*Sin[c]*Sin[d]) + 2*L*(Cos[e] - 1)*(Cos[b]*Cos[c]*Sin[d] + Cos[b]*Cos[d]*Sin[c]) + L*Cos[b]*Cos[c]*Sin[d] + L*Cos[b]*Sin[c]*(Cos[d] - 1)) - (Cos[e]*(Cos[b]*Cos[c]*Sin[d] + Cos[b]*Cos[d]*Sin[c]) + Sin[e]*(Cos[b]*Cos[c]*Cos[d] - Cos[b]*Sin[c]*Sin[d]))*(2*L*Sin[e]*(Cos[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) + Sin[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])) + L*Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) - 2*L*(Cos[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c]) - Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]))*(Cos[e] - 1) - L*(Cos[d] - 1)*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c]))]
+
+r61 = Simplify[0]
+r62 = Simplify[0]
+r63 = Simplify[0]
+r64 = Simplify[L*Cos[b]*Cos[c]]
+r65 = Simplify[2*L*(Cos[b]*Cos[c]*Cos[d] - Cos[b]*Sin[c]*Sin[d]) + Cos[b]*Sin[a]*(L*Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) - L*(Cos[d] - 1)*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])) + Cos[a]*Cos[b]*(L*Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) - L*(Cos[d] - 1)*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]))]
+r66 = Simplify[(Cos[e]*(Cos[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]) - Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b])) - Sin[e]*(Cos[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) + Sin[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c])))*(2*L*Sin[e]*(Cos[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) + Sin[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])) + L*Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) - 2*L*(Cos[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c]) - Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]))*(Cos[e] - 1) - L*(Cos[d] - 1)*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])) - (Cos[e]*(Cos[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c]) - Sin[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b])) - Sin[e]*(Cos[d]*(Sin[a]*Sin[c] + Cos[a]*Cos[c]*Sin[b]) + Sin[d]*(Cos[c]*Sin[a] - Cos[a]*Sin[b]*Sin[c])))*(2*L*Sin[e]*(Cos[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) + Sin[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c])) + L*Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]) - 2*L*(Cos[d]*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]) - Sin[d]*(Cos[a]*Sin[c] - Cos[c]*Sin[a]*Sin[b]))*(Cos[e] - 1) - L*(Cos[d] - 1)*(Cos[a]*Cos[c] + Sin[a]*Sin[b]*Sin[c]))]
+ 
+expr = Det[{
+  {r11, r12, r13, r14, r15, r16},
+  {r21, r22, r23, r24, r25, r26},
+  {r31, r32, r33, r34, r35, r36},
+  {r41, r42, r43, r44, r45, r46},
+  {r51, r52, r53, r54, r55, r56},
+  {r61, r62, r63, r64, r65, r66}}]

@@ -3,6 +3,10 @@ from numpy.linalg import matrix_power
 import math
 
 
+def trap_arr(arr):
+    return np.transpose(np.array(arr))
+
+
 def z_rotation(angle):
     cos = math.cos(angle)
     sin = math.sin(angle)
@@ -142,3 +146,29 @@ def t_adjoint(t):
 def pseduo_inv(m):
     m_tp = np.transpose(m)
     return np.dot(m_tp, np.linalg.inv(np.dot(m, m_tp)))
+
+
+def calc_body_j(thetas, bs):
+
+    curr_t = id(4)
+    jacobian_tp = []
+    for b, theta in zip(reversed(bs), reversed(thetas)):
+        curr_transform = t_adjoint(curr_t)
+        jacobian_tp.append(np.dot(curr_transform, b))
+        curr_t = np.dot(curr_t, se3_exp(b, -1 * theta))
+
+    return trap_arr(list(reversed(jacobian_tp)))
+
+
+def calc_space_j(thetas, ss):
+
+    curr_t = id(4)
+    jacobian_tp = []
+    for b, theta in zip(ss, thetas):
+        curr_transform = t_adjoint(curr_t)
+        jacobian_tp.append(np.dot(curr_transform, b))
+        curr_t = np.dot(curr_t, se3_exp(b, -1 * theta))
+
+    return trap_arr(jacobian_tp)
+
+
