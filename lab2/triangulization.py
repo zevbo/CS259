@@ -5,34 +5,6 @@ from stuff import *
 from sympy import symbols, solve, Eq, linsolve, core
 import numpy as np
 
-z1 = symbols('z1')
-z2 = symbols('z2')
-
-def fix_pos(pos):
-    return np.append(pos, np.array([[1]]))
-
-def to_measurment(real_p, sym):
-    pos = real_p[:-1]
-    mag = np.linalg.norm(pos)
-    new_pos = pos / mag * sym 
-    return fix_pos(new_pos)
-
-theta_x = random.uniform(0.0, 2 * math.pi)
-theta_y = random.uniform(0.0, 2 * math.pi)
-theta_z = random.uniform(0.0, 2 * math.pi)
-
-r_ab = matmul(z_rotation(theta_z), y_rotation(theta_y), x_rotation(theta_x))
-p_ab = np.array([2, -3, 7])
-t_ab = r_to_t(r_ab) + shift_to_t(p_ab)
-t_ab[3][3] = 1
-t_ba = np.linalg.inv(t_ab)
-
-real_p_a = np.transpose(np.array([1, -2, 4, 1]))
-real_p_b = np.dot(t_ba, real_p_a)
-
-meas_p_a = to_measurment(real_p_a, z1)
-meas_p_b = to_measurment(real_p_b, z2)
-
 def get_solution(t_ab, meas_p_a, meas_p_b, z1, z2):
 
     meas_p_a2 = np.dot(t_ab, meas_p_b)
@@ -73,7 +45,3 @@ def triangulate(t_ab, meas_p_a, meas_p_b, z1, z2):
     print(meas_p_a)
     real_p = list(map(lambda el: 1 if el == 1 else el.evalf(subs={z1: sol[0]}), meas_p_a))
     return real_p
-
-print(real_p_a)
-print(meas_p_a)
-print(triangulate(t_ab, meas_p_a, meas_p_b, z1, z2))
