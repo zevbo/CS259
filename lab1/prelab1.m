@@ -1,5 +1,5 @@
-rosinit
-armCmd = rospublisher('/scaled_pos_joint_traj_controller/command')
+rosinit;
+armCmd = rospublisher('/scaled_pos_joint_traj_controller/command');
 testMsg = rosmessage(armCmd);
 
 p1 = rosmessage('trajectory_msgs/JointTrajectoryPoint');
@@ -26,6 +26,11 @@ p5 = rosmessage('trajectory_msgs/JointTrajectoryPoint');
 p5.Positions = [-1.5 -1 2 3 0 0];
 p5.Velocities = [0 0 0 0 0 0];
 p5.TimeFromStart.Sec = 25;
+
+p6 = rosmessage('trajectory_msgs/JointTrajectoryPoint');
+p6.Positions = [-1.5 -1 2 3 -2 0];
+p6.Velocities = [0 0 0 0 0 0];
+p6.TimeFromStart.Sec = 25;
 
 testMsg.Points = [p p p p p];
 testMsg.JointNames = {'shoulder_pan_joint',

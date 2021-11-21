@@ -1,5 +1,5 @@
-rosinit
-armCmd = rospublisher('/scaled_pos_joint_traj_controller/command')
+rosinit;
+armCmd = rospublisher('/scaled_pos_joint_traj_controller/command');
 testMsg = rosmessage(armCmd);
 
 p1 = rosmessage('trajectory_msgs/JointTrajectoryPoint');
