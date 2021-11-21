@@ -64,8 +64,7 @@ def matmul(*matricies):
 def print_matrix(mat):
     for row in mat:
         for val in row:
-            print(val, end="")
-            print("\n", end="")
+            print(val)
         print("")
 
 
