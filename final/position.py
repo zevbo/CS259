@@ -7,7 +7,7 @@ from fk import calc_tsb
 
 def curr_data():
     
-    rospy.init_node('listener', anonymous=True)
+    # rospy.init_node('listener', anonymous=True)
 
     return rospy.wait_for_message('/joint_states', JointState)
 

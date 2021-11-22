@@ -6,16 +6,17 @@ import rosnode
 import rospy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
-rospy.init_node('moving')
-
-armCmd = rospy.Publisher(
-    '/scaled_pos_joint_traj_controller/command', JointTrajectory, queue_size=10)
-
 # note: this will change
 interval = 5
 clearance = 1
 
 def move_to(t_goal):
+    
+    # rospy.init_node('moving')
+
+    armCmd = rospy.Publisher(
+        '/scaled_pos_joint_traj_controller/command', JointTrajectory, queue_size=10)
+
     thetas = get_thetas_persistent(t_goal, curr_thetas())
     
     testMsg = JointTrajectory()
@@ -33,6 +34,8 @@ def move_to(t_goal):
     print(testMsg)
 
     ticks = 0
+
+    print("sending arm command")
 
     while ticks < 20:
         armCmd.publish(testMsg)
