@@ -47,7 +47,7 @@ def get_thetas_persistent(t_goal, thetas=None, persistent_tries = 20):
     while(persistent_tries > 0):
         persistent_tries -= 1
         if thetas == None:
-            thetas = np.array(list(map(lambda i: random.random(0, 2 * math.pi), range(6))))
+            thetas = np.array(list(map(lambda i: random.random() * 2 * math.pi, range(6))))
         val = get_thetas(thetas, t_goal)
         if val != None:
             return val
