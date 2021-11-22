@@ -1,4 +1,6 @@
 from stuff import trap_arr
+import numpy as np
+import math
 
 w1 = 133
 w2 = 99.6
@@ -16,3 +18,15 @@ b_6 = trap_arr([0, 0, 1, 0, 0, 0])
 
 body_screws = [b_1, b_2, b_3, b_4, b_5, b_6]
 
+link_lengths = [w1, l1, w1 + l2, w1 + w2, h2, 0]
+
+def angle_cost(delta):
+    weights = []
+    curr_length = 0
+    for length in link_lengths:
+        curr_length += length
+        weights.append(curr_length)
+    return np.dot(abs(delta), trap_arr(list(reversed(weights))))
+
+def legal_angle(angle):
+    return angle[1] > math.pi / 20

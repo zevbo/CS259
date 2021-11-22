@@ -172,4 +172,9 @@ def calc_space_j(thetas, screws):
 
     return trap_arr(jacobian_tp)
 
+def normalize_angle(angle):
+    return (angle + math.pi) % (2 * math.pi) - math.pi
 
+def normalize_vec(thetas):
+    for i in range(len(thetas)):
+        thetas[i] = normalize_angle(thetas[i])

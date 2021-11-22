@@ -1,8 +1,12 @@
-import time
-from ik import get_thetas_persistent
-from position import *
+from numpy.lib.function_base import angle
+from ik import *
+import numpy as np
 
-t_goal = curr_t()
-thetas = get_thetas_persistent(t_goal, curr_thetas())
+thetas1 = np.array([1] * 6)
+thetas2 = np.array([-0.9] * 6)
+get_thetas_persistent(calc_tsb(thetas1), thetas2)
 
-print(thetas)
+print("Minimum Possible: ")
+diff = thetas2 - thetas1
+normalize_vec(diff)
+print(angle_cost(diff))
