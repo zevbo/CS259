@@ -20,15 +20,22 @@ def get_thetas(thetas, t_goal, e_w=0.01, e_v=1, max_iters=100):
             thetas += np.dot(pseduo_inv(jacobian), e_twist)
     return None
 
-def get_thetas_persistent(t_goal, thetas=None, persistent_tries = 20):
+def get_thetas_persistent(t_goal, thetas_ideal, persistent_tries = 20):
+    best_result = None
+    best_error = 0
+    thetas = thetas_ideal
     while(persistent_tries > 0):
         persistent_tries -= 1
         if thetas is None:
             thetas = np.array(list(map(lambda i: random.random() * 2 * math.pi, range(6))))
-        val = get_thetas(thetas, t_goal)
-        if not(val is None):
-            return val
+        result = get_thetas(thetas, t_goal)
+        if not(result is None):
+            error = np.linalg.norm(result - thetas_ideal)
+            if best_result is None or error < best_error:
+                best_error = result 
+                best_error = error
         thetas = None
+    return best_result
 
 
 def tester(theta, delta):
