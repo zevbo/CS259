@@ -23,10 +23,10 @@ def get_thetas(thetas, t_goal, e_w=0.01, e_v=1, max_iters=100):
 def get_thetas_persistent(t_goal, thetas=None, persistent_tries = 20):
     while(persistent_tries > 0):
         persistent_tries -= 1
-        if thetas == None:
+        if thetas is None:
             thetas = np.array(list(map(lambda i: random.random() * 2 * math.pi, range(6))))
         val = get_thetas(thetas, t_goal)
-        if val != None:
+        if not(val is None):
             return val
         thetas = None
 
@@ -34,4 +34,4 @@ def get_thetas_persistent(t_goal, thetas=None, persistent_tries = 20):
 def tester(theta, delta):
     theta_guess = theta + delta
     t_goal = calc_tsb(theta)
-    return get_thetas(theta_guess, t_goal, 0.01, 0.01)
+    return get_thetas_persistent(t_goal, theta_guess)
