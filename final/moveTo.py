@@ -3,6 +3,7 @@ from ik import get_thetas_persistent
 from position import curr_thetas
 from fk import calc_tsb
 import params
+from specs import *
 
 import rosnode
 import rospy
@@ -29,8 +30,7 @@ def move_to(t_goal):
     point.velocities = [0, 0, 0, 0, 0, 0]
     point.time_from_start.secs = interval
     testMsg.points = [point]
-    testMsg.joint_names = ['shoulder_pan_joint', 'shoulder_lift_joint',
-                           'elbow_joint', 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
+    testMsg.joint_names = joint_order
 
     rate = rospy.Rate(10)
     print(testMsg)

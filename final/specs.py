@@ -30,3 +30,5 @@ def angle_cost(delta):
 
 def legal_angle(angle):
     return angle[1] > math.pi / 20
+    
+joint_order = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint', 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
