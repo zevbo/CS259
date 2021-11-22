@@ -77,7 +77,11 @@ def lp_cross(w):
 
 
 def so3_log(r):
-    theta = math.acos((r[0][0] + r[1][1] + r[2][2] - 1) / 2.0)
+    ratio = (r[0][0] + r[1][1] + r[2][2] - 1) / 2.0
+    if abs(ratio) > 1 and abs(ratio) < 1.01:
+        theta = 0 if ratio > 0 else math.pi
+    else:
+        theta = math.acos((r[0][0] + r[1][1] + r[2][2] - 1) / 2.0)
     if (math.sin(theta) == 0):
         return np.array([0, 0, 0]), theta
 

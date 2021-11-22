@@ -29,6 +29,6 @@ def angle_cost(delta):
     return np.dot(abs(delta), trap_arr(list(reversed(weights))))
 
 def legal_angle(angle):
-    return angle[1] > math.pi / 20
-    
+    return angle[1] <= math.pi / 40
+
 joint_order = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint', 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
