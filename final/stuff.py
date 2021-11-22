@@ -182,3 +182,16 @@ def normalize_angle(angle):
 def normalize_vec(thetas):
     for i in range(len(thetas)):
         thetas[i] = normalize_angle(thetas[i])
+
+def bracket_twist(twist):
+    w = twist[0:3]
+    v = np.transpose(np.array([[twist[3], twist[4], twist[5]]]))
+    top = np.concatenate((lp_cross(w), v), axis=1)
+    return np.concatenate((top, np.array([[0] * 4])), axis=0)
+def unbracket_twist(b_twist):
+    w = [b_twist[2][1], b_twist[0][2], b_twist[1][0]]
+    v = [b_twist[0][3], b_twist[1][3], b_twist[2][3]]
+    return trap_arr(w + v)
+
+def s_to_b(s, m):
+    return unbracket_twist(matmul(np.linalg.inv(m), bracket_twist(s), m))

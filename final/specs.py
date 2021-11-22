@@ -1,4 +1,4 @@
-from stuff import trap_arr
+from stuff import *
 import numpy as np
 import math
 
@@ -9,14 +9,23 @@ l2 = 392
 h1 = -240
 h2 = 99.7
 
-b_1 = trap_arr([0, 1, 0, w1 + w2, 0, l1 + l2])
-b_2 = trap_arr([0, 0, 1, h2, -(l1 + l2), 0])
-b_3 = trap_arr([0, 0, 1, h2, -l2, 0])
-b_4 = trap_arr([0, 0, 1, h2, 0, 0])
-b_5 = trap_arr([0, -1, 0, -w2, 0, 0])
-b_6 = trap_arr([0, 0, 1, 0, 0, 0])
+s_1 = trap_arr([0, 0, 1, 0, 0, 0])
+s_2 = trap_arr([0, -1, 0, h1, 0, 0])
+s_3 = trap_arr([0, -1, 0, h1, 0, l1])
+s_4 = trap_arr([0, -1, 0, h1, 0, l1 + l2])
+s_5 = trap_arr([0, 0, -1, w1, -(l1 + l2), 0])
+s_6 = trap_arr([0, -1, 0, h1 - h2, 0, l1 + l2])
 
-body_screws = [b_1, b_2, b_3, b_4, b_5, b_6]
+m = np.array([
+    [0, -1, 0, -(l1 + l2)],
+    [0, 0, -1, -(w1 + w2)],
+    [1, 0, 0, h1 - h2],
+    [0, 0, 0, 1]
+])
+
+screws = [s_1, s_2, s_3, s_4, s_5, s_6]
+
+body_screws = [s_to_b(s, m) for s in screws]
 
 link_lengths = [w1, l1, w1 + l2, w1 + w2, h2, 0]
 
