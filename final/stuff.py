@@ -57,7 +57,7 @@ def r_and_shift_to_t(r, shift):
 def matmul(*matricies):
     res = matricies[0]
     for m in matricies[1:]:
-        res = np.matmul(res, m)
+        res = np.dot(res, m)
     return res
 
 
@@ -77,12 +77,12 @@ def lp_cross(w):
 
 
 def so3_log(r):
-    theta = math.acos((r[0][0] + r[1][1] + r[2][2] - 1) / 2)
+    theta = math.acos((r[0][0] + r[1][1] + r[2][2] - 1) / 2.0)
     if (math.sin(theta) == 0):
         return np.array([0, 0, 0]), theta
 
     def get_w(i1, i2):
-        return (r[i1][i2] - r[i2][i1]) / (2 * math.sin(theta))
+        return (r[i1][i2] - r[i2][i1]) / (2.0 * math.sin(theta))
     w1 = get_w(2, 1)
     w2 = get_w(0, 2)
     w3 = get_w(1, 0)
@@ -104,8 +104,8 @@ def se3_log(t):
         return np.array([0, 0, 0, 0, 0, 0]), theta
     w_m = lp_cross(w)
     i = id(3)
-    g_inv = (1 / theta) * i - (1 / 2) * w_m + (1 / theta -
-                                               (1 / 2) / math.tan(theta / 2)) * np.dot(w_m, w_m)
+    g_inv = (1.0 / theta) * i - (1 / 2.0) * w_m + (1.0 / theta -
+                                               (1 / 2.0) / math.tan(theta / 2.0)) * np.dot(w_m, w_m)
     v = np.transpose(np.dot(g_inv, p))
     screw = np.concatenate((w, v), axis=0)
     return screw, theta

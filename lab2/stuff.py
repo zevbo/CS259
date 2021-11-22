@@ -62,8 +62,8 @@ def matmul(*matricies):
 def print_matrix(mat):
     for row in mat:
         for val in row:
-            print(val, end="")
-            print("\n", end="")
+            print(val)
+            # print("\n")
         print("")
 
 
@@ -167,7 +167,7 @@ def calc_space_j(thetas, ss):
     for b, theta in zip(ss, thetas):
         curr_transform = t_adjoint(curr_t)
         jacobian_tp.append(np.dot(curr_transform, b))
-        curr_t = np.dot(curr_t, se3_exp(b, -1 * theta))
+        curr_t = np.dot(curr_t, se3_exp(b, theta))
 
     return trap_arr(jacobian_tp)
 

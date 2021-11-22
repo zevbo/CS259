@@ -1,37 +1,14 @@
 import numpy as np
 from stuff import *
 import random
-
-w1 = 133
-w2 = 99.6
-l1 = 425
-l2 = 392
-h1 = -240
-h2 = 99.7
-
-s1 = [0, 0, 1, 0, 0, 0]
-s2 = [0, -1, 0, h1, 0, 0]
-s3 = [0, -1, 0, h1, 0, l1]
-s4 = [0, -1, 0, h1, 0, l1+l2]
-s5 = [0, 0, -1, w1, -(l1+l2), 0]
-s6 = [0, -1, 0, h1-h2, 0, l1+l2]
-screws = [s1, s2, s3, s4, s5, s6]
-
-def calc_tsb_exp(thetas):
-    m = np.array([
-        [0, -1, 0, -(l1 + l2)],
-        [0, 0, -1, -(w1 + w2)],
-        [1, 0, 0, h1 - h2],
-        [0, 0, 0, 1]
-    ])
-    exps = [se3_exp(b, theta) for (b, theta) in zip(screws, thetas)]
-    return np.dot(matmul(*exps), m)
+from specs import *
+from fk import calc_tsb
 
 
-def get_thetas(thetas, t_goal, max_iters=100, e_w=0.01, e_v=1):
+def get_thetas(thetas, t_goal, e_w=0.01, e_v=1, max_iters=100):
     while(max_iters > 0):
         max_iters -= 1
-        result = np.dot(np.linalg.inv(calc_tsb_exp(thetas)), t_goal)
+        result = np.dot(np.linalg.inv(calc_tsb(thetas)), t_goal)
         screw, theta = se3_log(result)
         e_twist = screw * theta
         w = e_twist[0:3]
@@ -39,7 +16,7 @@ def get_thetas(thetas, t_goal, max_iters=100, e_w=0.01, e_v=1):
         if np.linalg.norm(w) < e_w and np.linalg.norm(v) < e_v:
             return thetas
         else:
-            jacobian = calc_space_j(thetas, screws)
+            jacobian = calc_body_j(thetas, body_screws)
             thetas += np.dot(pseduo_inv(jacobian), e_twist)
     return None
 
@@ -52,3 +29,9 @@ def get_thetas_persistent(t_goal, thetas=None, persistent_tries = 20):
         if val != None:
             return val
         thetas = None
+
+
+def tester(theta, delta):
+    theta_guess = theta + delta
+    t_goal = calc_tsb(theta)
+    return get_thetas(theta_guess, t_goal, 0.01, 0.01)

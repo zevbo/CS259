@@ -34,6 +34,8 @@ def get_vb(thetas, t_goal, e_w=0.01, e_v=1):
             return thetas
         else:
             jacobian = calc_body_j(thetas, bs)
+            print(jacobian)
+            break
             thetas += np.dot(pseduo_inv(jacobian), e_twist)
 
 
