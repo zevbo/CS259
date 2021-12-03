@@ -13,8 +13,6 @@ import random
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from sympy import symbols, solve, Eq, linsolve, core
 
-rospy.init_node('prelab1')
-
 armCmd = rospy.Publisher(
     '/scaled_pos_joint_traj_controller/command', JointTrajectory, queue_size=10)
 
