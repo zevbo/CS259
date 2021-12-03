@@ -33,7 +33,7 @@ search_range = [-500, -100], [-400, 200], [0, 200]
 
 
 def random_search_pos():
-    return np.array(list(map(lambda range: random.random(*range), search_range)))
+    return np.array(list(map(lambda range: random.uniform(*range), search_range)))
 
 
 def random_t_goal(r_searching):
