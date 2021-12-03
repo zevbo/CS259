@@ -27,7 +27,7 @@ r_searching_1 = np.array([
 ])
 # rotated a little bit from downards pointing
 r_searching_2 = np.dot(x_rotation(math.pi / 6), r_searching_1)
-search_range = [-500, -100], [-400, 200], [0, 200]
+search_range = [-600, -100], [-500, 500], [150, 350]
 
 
 def random_search_pos():
