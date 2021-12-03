@@ -23,7 +23,7 @@ armCmd = rospy.Publisher(
 
 # pointing down
 r_searching_1 = np.array([
-    [1, 0, 0],
+    [-1, 0, 0],
     [0, 1, 0],
     [0, 0, -1],
 ])

@@ -51,8 +51,10 @@ def shift_to_t(shift):
     t[3][3] = 1
     return t
 
+
 def r_and_shift_to_t(r, shift):
     return np.dot(shift_to_t(shift), r_to_t(r))
+
 
 def matmul(*matricies):
     res = matricies[0]
@@ -81,7 +83,7 @@ def so3_log(r):
     if abs(ratio) > 1 and abs(ratio) < 1.01:
         theta = 0 if ratio > 0 else math.pi
     else:
-        theta = math.acos((r[0][0] + r[1][1] + r[2][2] - 1) / 2.0)
+        theta = math.acos(ratio)
     if (math.sin(theta) == 0):
         return np.array([0, 0, 0]), theta
 
@@ -108,13 +110,13 @@ def se3_log(t):
         w = np.array([0, 0, 0])
         v = np.transpose(p)
         norm = np.linalg.norm(v)
-        v /= norm 
+        v /= norm
         screw = np.concatenate((w, v), axis=0)
         return np.concatenate((w, v), axis=0), norm
     w_m = lp_cross(w)
     i = id(3)
     g_inv = (1.0 / theta) * i - (1 / 2.0) * w_m + (1.0 / theta -
-                                               (1 / 2.0) / math.tan(theta / 2.0)) * np.dot(w_m, w_m)
+                                                   (1 / 2.0) / math.tan(theta / 2.0)) * np.dot(w_m, w_m)
     v = np.transpose(np.dot(g_inv, p))
     screw = np.concatenate((w, v), axis=0)
     return screw, theta
@@ -181,22 +183,28 @@ def calc_space_j(thetas, screws):
 
     return trap_arr(jacobian_tp)
 
+
 def normalize_angle(angle):
     return (angle + math.pi) % (2 * math.pi) - math.pi
+
 
 def normalize_vec(thetas):
     for i in range(len(thetas)):
         thetas[i] = normalize_angle(thetas[i])
+
 
 def bracket_twist(twist):
     w = twist[0:3]
     v = np.transpose(np.array([[twist[3], twist[4], twist[5]]]))
     top = np.concatenate((lp_cross(w), v), axis=1)
     return np.concatenate((top, np.array([[0] * 4])), axis=0)
+
+
 def unbracket_twist(b_twist):
     w = [b_twist[2][1], b_twist[0][2], b_twist[1][0]]
     v = [b_twist[0][3], b_twist[1][3], b_twist[2][3]]
     return trap_arr(w + v)
+
 
 def s_to_b(s, m):
     return unbracket_twist(matmul(np.linalg.inv(m), bracket_twist(s), m))
