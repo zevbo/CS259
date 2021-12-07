@@ -4,6 +4,18 @@ import cv2
 # Todo: choose reasonable area
 min_contour_area = 20
 
+def result_to_image(result):
+    str_result = str(result).split("[")[-1][0:-1].split(", ")
+    arr = list(map(lambda s: int(s), str_result))
+    data = []
+    for row in range(result.height):
+        data.append([])
+        for col in range(result.width):
+            PIXEL_SIZE = 3
+            index = row * result.width * PIXEL_SIZE + col * PIXEL_SIZE
+            data[-1].append(arr[index:index + PIXEL_SIZE])
+    return np.array(data, dtype=np.dtype('uint8'))
+
 def find_centroid(mask):
     contours = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours = contours[0] if len(contours) == 2 else contours[1]
