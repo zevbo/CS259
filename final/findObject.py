@@ -26,6 +26,7 @@ def find_centroid(mask):
     big_contour = max(contours, key=cv2.contourArea)
     if cv2.contourArea(big_contour) < min_contour_area:
         return None
+    print("Area: ", cv2.contourArea(big_contour))
     M = cv2.moments(big_contour)
     cx = int(M["m10"] / M["m00"])
     cy = int(M["m01"] / M["m00"])
@@ -35,7 +36,7 @@ def find_centroid(mask):
 def find_obj(img):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     # lower mask (0-10)
-    lower_red = np.array([0, 50, 50])
+    lower_red = np.array([0, 100, 100])
     upper_red = np.array([10, 255, 255])
     mask0 = cv2.inRange(img_hsv, lower_red, upper_red)
 
