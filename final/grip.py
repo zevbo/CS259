@@ -1,11 +1,17 @@
 import rospy
+from robotiq_hande_ros_driver.srv import gripper_service
 
-topic = "robotiq_hande_ros_driver/gripper_service"
+gripper_srv = rospy.ServiceProxy('gripper_service', gripper_service)
+
+SPEED = 255
+FORCE = 255
+GRIPPED_POS = 120
+OPEN_POS = 0
 
 
 def grip():
-    raise RuntimeError("grip unimplemented")
+    raise gripper_srv(position=GRIPPED_POS, speed=SPEED, force=FORCE)
 
 
 def release():
-    raise RuntimeError("release unimplemented")
+    raise gripper_srv(position=GRIPPED_POS, speed=OPEN_POS, force=FORCE)

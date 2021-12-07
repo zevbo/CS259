@@ -27,7 +27,7 @@ r_searching_1 = np.array([
 ])
 # rotated a little bit from downards pointing
 r_searching_2 = np.dot(x_rotation(math.pi / 6), r_searching_1)
-search_range = [-600, -100], [-500, 500], [150, 350]
+search_range = [-500, -100], [-600, 600], [200, 450]
 
 
 def random_search_pos():
@@ -54,8 +54,7 @@ def search_for_with(search_f, r_searching):
             # TODO: make sure the x and y of the camera are oriented correctly
             r_x = math.tan(maxHorAngle) * img_x / maxX
             r_y = math.tan(maxVerAngle) * img_y / maxY
-            # currT()
-            return np.transpose(np.array([r_x, r_y, 1])), np.array([])
+            return np.transpose(np.array([r_x, r_y, 1])), curr_t()
 
 
 def locate(search_f):
