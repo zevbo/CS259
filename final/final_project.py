@@ -58,11 +58,13 @@ def search_for_with(search_f, r_searching):
 
 
 def locate(search_f):
-    pos1, t_s1 = search_for_with(search_f, r_searching_1)
-    pos2, t_s2 = search_for_with(search_f, r_searching_2)
+    pos1, t_sb1 = search_for_with(search_f, r_searching_1)
+    pos2, t_sb2 = search_for_with(search_f, r_searching_2)
     z1, z2 = symbols('z1, z2')
     # t_ab, meas_p_a, meas_p_b, z1, z2
-    t_ab = np.dot(np.linalg.inv(t_s1), t_s2)
+    t_sc1 = np.dot(t_sb1, t_bc)
+    t_sc2 = np.dot(t_sb2, t_bc)
+    t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
     return triangulate(t_ab, pos1, pos2, z1, z2)
 
 
