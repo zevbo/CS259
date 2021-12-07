@@ -21,8 +21,8 @@ armCmd = rospy.Publisher(
 
 # pointing down
 r_searching_1 = np.array([
-    [-1, 0, 0],
-    [0, 1, 0],
+    [1, 0, 0],
+    [0, -1, 0],
     [0, 0, -1],
 ])
 # rotated a little bit from downards pointing
@@ -45,7 +45,7 @@ def move_to_random(r_searching):
 def search_for_with(search_f, r_searching):
     while True:
         move_to_random(r_searching)
-        img = None  # get_image()
+        img = getImage()
         loc = search_f(img)
         if loc != None:
             img_x, img_y = loc
