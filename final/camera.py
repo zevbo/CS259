@@ -1,20 +1,22 @@
 import math
-from urllib.request import urlretrieve
+from urllib.request import urlopen, urlretrieve
 import cv2
 import numpy as np
 from stuff import *
 
 url = "http://192.168.1.2:4242/current.jpg?annotations=off"
+url_setup = "http://192.168.1.2:4242/captureimage"
 filename = "image.jpg"
 
 
 def getImage():
+    urlopen(url_setup)
     urlretrieve(url, filename)
     return cv2.imread(filename)
 
 
-maxHorAngle = math.pi / 4
-maxVerAngle = 0.341
+maxHorAngle = 50 / 2 * math.pi / 180
+maxVerAngle = 39 / 2 * math.pi / 180
 maxX = 240
 maxY = 320
 
