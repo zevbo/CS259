@@ -42,7 +42,7 @@ def move_to_random(r_searching):
     move_to(random_t_goal(r_searching))
 
 
-def search_for_with(search_f, r_searching):
+def search_for_with(search_f, r_searching, z):
     while True:
         move_to_random(r_searching)
         img = getImage()
@@ -55,21 +55,22 @@ def search_for_with(search_f, r_searching):
             r_x = math.tan(maxHorAngle) * img_x / maxX
             r_y = math.tan(maxVerAngle) * img_y / maxY
             # r_y and r_x here switched because that's how the real coordinates are
-            return np.transpose(np.array([-r_y, r_x, 1])), curr_t()
+            return np.transpose(np.array([[-r_y * z, r_x * z, z, 1]])), curr_t()
 
 
 def locate(search_f):
-    pos1, t_sb1 = search_for_with(search_f, r_searching_1)
-    pos2, t_sb2 = search_for_with(search_f, r_searching_2)
     z1, z2 = symbols('z1, z2')
+    pos1, t_sb1 = search_for_with(search_f, r_searching_1)
+    # pos2, t_sb2 = search_for_with(search_f, r_searching_2)
     # t_ab, meas_p_a, meas_p_b, z1, z2
     t_sc1 = np.dot(t_sb1, t_bc)
-    t_sc2 = np.dot(t_sb2, t_bc)
-    t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
-    return triangulate(t_ab, pos1, pos2, z1, z2)
+    # t_sc2 = np.dot(t_sb2, t_bc)
+    # t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
+    return triangulate(t_sc1, pos1, z1)
 
 
 def move_to_find(search_f):
+    # okay buddy. Can't pass a point to move_to
     move_to(locate(search_f))
 
 
