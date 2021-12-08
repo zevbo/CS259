@@ -4,6 +4,7 @@ from moveTo import *
 from grip import *
 from camera import *
 from position import *
+from fk import calc_tsb
 from findObject import find_obj, find_dest
 
 import rosnode
@@ -88,9 +89,11 @@ def pick_up():
     release()
     move_to_find(find_obj, False)
     grip()
-    time.sleep(2)
+    time.sleep(1)
 
 
 def deposit():
     move_to_find(find_dest, True)
     release()
+    time.sleep(1)
+    move_to(calc_tsb(np.array([0, -math.pi / 2, 0, 0, -math.pi / 2, 0])))
