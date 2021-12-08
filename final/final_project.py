@@ -55,7 +55,7 @@ def search_for_with(search_f, r_searching):
             r_x = math.tan(maxHorAngle) * img_x / maxX
             r_y = math.tan(maxVerAngle) * img_y / maxY
             # r_y and r_x here switched because that's how the real coordinates are
-            return np.transpose(np.array([r_y, r_x, 1])), curr_t()
+            return np.transpose(np.array([-r_y, r_x, 1])), curr_t()
 
 
 def locate(search_f):
