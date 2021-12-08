@@ -23,8 +23,8 @@ def move_to(t_goal):
 
     thetas = get_thetas_persistent(t_goal, curr_thetas())
 
-    if not thetas:
-        return None
+    if thetas is None:
+        return
 
     testMsg = JointTrajectory()
 
