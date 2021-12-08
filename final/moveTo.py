@@ -51,6 +51,7 @@ def move_to(t_goal):
         print(np.linalg.norm(np.array(curr_v())))
         time.sleep(clearance)
 
+    print(np.linalg.norm(np.array(curr_v())))
     time.sleep(clearance)
 
     return True
