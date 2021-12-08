@@ -35,10 +35,10 @@ def find_centroid(mask):
     return (cx - maxX, cy - maxY)  # , big_contour
 
 
-lower_red = np.array([0, 75, 75])
+lower_red = np.array([0, 75, 50])
 upper_red = np.array([10, 255, 255])
 
-lower_red2 = np.array([170, 75, 75])
+lower_red2 = np.array([170, 75, 50])
 upper_red2 = np.array([180, 255, 255])
 
 
@@ -53,8 +53,8 @@ def find_obj(img):
     return find_centroid(mask0 + mask1)
 
 
-lower_green = np.array([110, 75, 75])
-upper_green = np.array([130, 255, 255])
+lower_green = np.array([50, 75, 50])
+upper_green = np.array([70, 255, 255])
 
 
 def find_dest(img):
