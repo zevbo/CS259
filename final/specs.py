@@ -29,6 +29,7 @@ body_screws = [s_to_b(s, m) for s in screws]
 
 link_lengths = [w1, l1, w1 + l2, w1 + w2, h2, 0]
 
+
 def angle_cost(delta):
     weights = []
     curr_length = 0
@@ -37,7 +38,10 @@ def angle_cost(delta):
         weights.append(curr_length)
     return np.dot(abs(delta), trap_arr(list(reversed(weights))))
 
+
 def legal_angle(angle):
     return angle[1] <= math.pi / 40
 
-joint_order = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint', 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
+
+joint_order = ['shoulder_pan_joint', 'shoulder_lift_joint',
+               'elbow_joint', 'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']

@@ -22,6 +22,6 @@ maxY = 240
 
 # this is a guess rn
 angle = 30 * math.pi / 180
-r_bc = x_rotation(angle)
+r_bc = y_rotation(angle)
 p_bc = np.array([0, -4.2, -15])
 t_bc = r_and_shift_to_t(r_bc, p_bc)
