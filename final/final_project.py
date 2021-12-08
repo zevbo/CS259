@@ -81,11 +81,14 @@ def locate(search_f, high):
     return r_and_shift_to_t(r_searching_1, p)
 
 
+clearance = 40
+
+
 def move_to_find(search_f, high):
     # okay buddy. Can't pass a point to move_to
     t_goal = locate(search_f, high)
     t_intermdiate = np.array(t_goal)
-    t_intermdiate[2][3] += 40
+    t_intermdiate[2][3] += clearance
     move_to(t_intermdiate)
     move_to(t_goal, interval=2)
 
@@ -101,4 +104,7 @@ def deposit():
     move_to_find(find_dest, True)
     release()
     time.sleep(1)
+    t = curr_t()
+    t[2][3] += clearance
+    move_to(t, interval=2)
     move_to(calc_tsb(np.array([0, -math.pi / 2, 0, 0, -math.pi / 2, 0])))
