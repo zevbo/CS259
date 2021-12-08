@@ -83,7 +83,6 @@ def pick_up():
     move_to_find(find_obj)
     grip()
     time.sleep(2)
-    move_to_random(r_searching_1)
 
 
 def deposit():
@@ -93,3 +92,4 @@ def deposit():
 
 rospy.init_node("test")
 pick_up()
+deposit()
