@@ -79,6 +79,7 @@ def move_to_find(search_f):
 
 
 def pick_up():
+    release()
     move_to_find(find_obj)
     grip()
     time.sleep(2)
