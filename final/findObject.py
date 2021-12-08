@@ -30,7 +30,7 @@ def find_centroid(mask):
     M = cv2.moments(big_contour)
     cx = int(M["m10"] / M["m00"])
     cy = int(M["m01"] / M["m00"])
-    return (cx - maxX, cy - maxY), big_contour
+    return (cx - maxX, cy - maxY)  # , big_contour
 
 
 lower_red = np.array([0, 100, 150])
