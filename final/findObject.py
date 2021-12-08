@@ -3,7 +3,7 @@ import cv2
 from camera import *
 
 # Todo: choose reasonable area
-min_contour_area = 20
+min_contour_area = 200
 
 
 def result_to_image(result):
