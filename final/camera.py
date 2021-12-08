@@ -17,8 +17,8 @@ def getImage():
 
 maxHorAngle = 50 / 2 * math.pi / 180
 maxVerAngle = 39 / 2 * math.pi / 180
-maxX = 240
-maxY = 320
+maxX = 320
+maxY = 240
 
 # this is a guess rn
 angle = 30 * math.pi / 180
