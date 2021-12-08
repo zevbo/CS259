@@ -54,7 +54,7 @@ def triangulate(t_ab, meas_p_a, z1, high):
     # meas_p_a = meas_p_a * z1
     # meas_p_b = meas_p_b * z2
     #sol = get_solution(t_ab, meas_p_a, meas_p_b, z1, z2)
-    sol, p = get_solution_simple(t_ab, meas_p_a, z1)
+    sol, p = get_solution_simple(t_ab, meas_p_a, z1, high)
     real_p = list(map(lambda el: 1 if el ==
                   1 else el[0].evalf(subs={z1: sol[0]}), p))
     real_p[1] -= 25
