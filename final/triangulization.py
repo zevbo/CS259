@@ -51,7 +51,7 @@ def get_solution_simple(t_sc, meas_p, z):
 
 
 def triangulate(t_ab, meas_p_a, z1):
-    meas_p_a = meas_p_a * z1
+    # meas_p_a = meas_p_a * z1
     # meas_p_b = meas_p_b * z2
     #sol = get_solution(t_ab, meas_p_a, meas_p_b, z1, z2)
     sol, p = get_solution_simple(t_ab, meas_p_a, z1)
