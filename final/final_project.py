@@ -88,3 +88,7 @@ def pick_up():
 def deposit():
     move_to_find(find_dest)
     release()
+
+
+rospy.init_node("test")
+pick_up()
