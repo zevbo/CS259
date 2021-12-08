@@ -62,7 +62,7 @@ def search_for_with(search_f, r_searching, z):
 
 def locate(search_f):
     z1, z2 = symbols('z1, z2')
-    pos1, t_sb1 = search_for_with(search_f, r_searching_1)
+    pos1, t_sb1 = search_for_with(search_f, r_searching_1, z1)
     # pos2, t_sb2 = search_for_with(search_f, r_searching_2)
     # t_ab, meas_p_a, meas_p_b, z1, z2
     t_sc1 = np.dot(t_sb1, t_bc)
