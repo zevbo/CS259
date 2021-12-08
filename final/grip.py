@@ -5,7 +5,7 @@ gripper_srv = rospy.ServiceProxy('gripper_service', gripper_service)
 
 SPEED = 255
 FORCE = 255
-GRIPPED_POS = 240
+GRIPPED_POS = 250
 OPEN_POS = 0
 
 
