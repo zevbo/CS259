@@ -14,9 +14,7 @@ interval = 5
 clearance = 1
 
 
-def move_to(t_goal):
-
-    # rospy.init_node('moving')
+def move_to(t_goal, time=interval):
 
     topic = 'arm_controller/command' if params.on_gazebo else '/scaled_pos_joint_traj_controller/command'
     armCmd = rospy.Publisher(topic, JointTrajectory, queue_size=10)
@@ -31,7 +29,7 @@ def move_to(t_goal):
     point = JointTrajectoryPoint()
     point.positions = thetas
     point.velocities = [0, 0, 0, 0, 0, 0]
-    point.time_from_start.secs = interval
+    point.time_from_start.secs = time
     testMsg.points = [point]
     testMsg.joint_names = joint_order
 
