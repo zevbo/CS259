@@ -1,6 +1,6 @@
 import time
 from ik import get_thetas_persistent
-from position import curr_thetas
+from position import curr_thetas, curr_v
 from fk import calc_tsb
 import params
 from specs import *
@@ -48,6 +48,9 @@ def move_to(t_goal):
         ticks += 1
 
     time.sleep(interval + clearance)
+
+    while(np.linalg.norm(np.array(curr_v())) > 100):
+        time.sleep(clearance)
 
     return True
 
