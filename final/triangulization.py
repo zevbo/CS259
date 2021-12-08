@@ -9,7 +9,7 @@ import numpy as np
 def get_solution(t_ab, meas_p_a, meas_p_b, z1, z2):
 
     meas_p_a2 = np.dot(t_ab, meas_p_b)
-    zero_p = [a[0] for a in (meas_p_a2 - meas_p_a).tolist()]
+    zero_p = [a[0] for a in (meas_p_a2 - meas_p_a).tolist()[:-1]]
 
     sol = linsolve(zero_p, (z1, z2))
 
