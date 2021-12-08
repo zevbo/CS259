@@ -13,18 +13,21 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 interval = 5
 clearance = 1
 
+
 def move_to(t_goal):
-    
+
     # rospy.init_node('moving')
 
     topic = 'arm_controller/command' if params.on_gazebo else '/scaled_pos_joint_traj_controller/command'
     armCmd = rospy.Publisher(topic, JointTrajectory, queue_size=10)
 
     thetas = get_thetas_persistent(t_goal, curr_thetas())
-    
+
+    if not thetas:
+        return None
+
     testMsg = JointTrajectory()
-    positions = [thetas]
-    
+
     point = JointTrajectoryPoint()
     point.positions = thetas
     point.velocities = [0, 0, 0, 0, 0, 0]
@@ -45,6 +48,7 @@ def move_to(t_goal):
         ticks += 1
 
     time.sleep(interval + clearance)
+
 
 def moveJoints(thetas):
     move_to(calc_tsb(thetas))
