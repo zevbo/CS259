@@ -14,4 +14,4 @@ def grip():
 
 
 def release():
-    return gripper_srv(position=GRIPPED_POS, speed=OPEN_POS, force=FORCE)
+    return gripper_srv(position=OPEN_POS, speed=SPEED, force=FORCE)

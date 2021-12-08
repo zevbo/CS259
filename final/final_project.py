@@ -68,7 +68,8 @@ def locate(search_f):
     t_sc1 = np.dot(t_sb1, t_bc)
     # t_sc2 = np.dot(t_sb2, t_bc)
     # t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
-    return triangulate(t_sc1, pos1, z1)
+    p = triangulate(t_sc1, pos1, z1)
+    return r_and_shift_to_t(r_searching_1, p)
 
 
 def move_to_find(search_f):
@@ -79,6 +80,8 @@ def move_to_find(search_f):
 def pick_up():
     move_to_find(find_obj)
     grip()
+    time.sleep(2)
+    move_to_random(r_searching_1)
 
 
 def deposit():
