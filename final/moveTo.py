@@ -47,8 +47,11 @@ def move_to(t_goal):
         rate.sleep()
         ticks += 1
 
-    while(np.linalg.norm(np.array(curr_v())) > 10):
+    while(np.linalg.norm(np.array(curr_v())) > 1):
+        print(np.linalg.norm(np.array(curr_v())))
         time.sleep(clearance)
+
+    time.sleep(clearance)
 
     return True
 
