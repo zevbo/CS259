@@ -79,7 +79,7 @@ def move_to_find(search_f, high):
     # okay buddy. Can't pass a point to move_to
     t_goal = locate(search_f, high)
     t_intermdiate = np.array(t_goal)
-    t_intermdiate[3][3] += 20
+    t_intermdiate[3][3] += 40
     move_to(t_intermdiate)
     move_to(t_goal)
 
