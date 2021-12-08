@@ -39,12 +39,14 @@ def random_t_goal(r_searching):
 
 
 def move_to_random(r_searching):
-    move_to(random_t_goal(r_searching))
+    return move_to(random_t_goal(r_searching))
 
 
 def search_for_with(search_f, r_searching, z):
     while True:
-        move_to_random(r_searching)
+        found = move_to_random(r_searching)
+        if not found:
+            continue
         time.sleep(1)
         getImage()
         time.sleep(10)

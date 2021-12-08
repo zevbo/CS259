@@ -24,7 +24,7 @@ def move_to(t_goal):
     thetas = get_thetas_persistent(t_goal, curr_thetas())
 
     if thetas is None:
-        return
+        return False
 
     testMsg = JointTrajectory()
 
@@ -48,6 +48,8 @@ def move_to(t_goal):
         ticks += 1
 
     time.sleep(interval + clearance)
+
+    return True
 
 
 def moveJoints(thetas):
