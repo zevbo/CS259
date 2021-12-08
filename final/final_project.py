@@ -87,7 +87,7 @@ def move_to_find(search_f, high):
     t_intermdiate = np.array(t_goal)
     t_intermdiate[2][3] += 40
     move_to(t_intermdiate)
-    move_to(t_goal)
+    move_to(t_goal, interval=2)
 
 
 def pick_up():
