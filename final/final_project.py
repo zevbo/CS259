@@ -52,8 +52,13 @@ def search_for_with(search_f, r_searching, z):
         getImage()
         time.sleep(10)
         img = getImage()
-        loc = search_f(img)
-        if loc != None:
+        result = search_f(img)
+        if result != None:
+            loc, big_contour = result
+            x, y, w, h = cv2.boundingRect(big_contour)
+            disp_image = cv2.rectangle(
+                img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            cv2.imwrite("found.jpg", disp_image)
             img_x, img_y = loc
             # ratio = tan(angle)
             # max_pos = z_dist * tan(max_angle)
