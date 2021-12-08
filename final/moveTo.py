@@ -10,11 +10,10 @@ import rospy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 # note: this will change
-interval = 5
 clearance = 1
 
 
-def move_to(t_goal, time=interval):
+def move_to(t_goal, interval=5):
 
     topic = 'arm_controller/command' if params.on_gazebo else '/scaled_pos_joint_traj_controller/command'
     armCmd = rospy.Publisher(topic, JointTrajectory, queue_size=10)
