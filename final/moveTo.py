@@ -48,10 +48,10 @@ def move_to(t_goal):
         ticks += 1
 
     while(np.linalg.norm(np.array(curr_v())) > 1):
-        print(np.linalg.norm(np.array(curr_v())))
+        print("v norm: ", np.linalg.norm(np.array(curr_v())))
         time.sleep(clearance)
 
-    print(np.linalg.norm(np.array(curr_v())))
+    print("v norm: ", np.linalg.norm(np.array(curr_v())))
     time.sleep(clearance)
 
     return True
