@@ -28,7 +28,7 @@ def move_to(t_goal, interval=5):
     point = JointTrajectoryPoint()
     point.positions = thetas
     point.velocities = [0, 0, 0, 0, 0, 0]
-    point.time_from_start.secs = time
+    point.time_from_start.secs = interval
     testMsg.points = [point]
     testMsg.joint_names = joint_order
 
