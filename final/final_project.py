@@ -46,7 +46,7 @@ def search_for_with(search_f, r_searching, z):
     while True:
         move_to_random(r_searching)
         getImage()
-        time.sleep(5)
+        time.sleep(10)
         img = getImage()
         loc = search_f(img)
         if loc != None:
