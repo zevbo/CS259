@@ -38,7 +38,7 @@ def find_centroid(mask):
 lower_red = np.array([0, 75, 50])
 upper_red = np.array([10, 255, 255])
 
-lower_red2 = np.array([170, 75, 50])
+lower_red2 = np.array([170, 50, 30])
 upper_red2 = np.array([180, 255, 255])
 
 
