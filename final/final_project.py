@@ -63,7 +63,7 @@ def search_for_with(search_f, r_searching, z):
             return np.transpose(np.array([[-r_y * z, r_x * z, z, 1]])), curr_t()
 
 
-def locate(search_f):
+def locate(search_f, high):
     z1, z2 = symbols('z1, z2')
     pos1, t_sb1 = search_for_with(search_f, r_searching_2, z1)
     # pos2, t_sb2 = search_for_with(search_f, r_searching_2)
@@ -71,24 +71,24 @@ def locate(search_f):
     t_sc1 = np.dot(t_sb1, t_bc)
     # t_sc2 = np.dot(t_sb2, t_bc)
     # t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
-    p = triangulate(t_sc1, pos1, z1)
+    p = triangulate(t_sc1, pos1, z1, high)
     return r_and_shift_to_t(r_searching_1, p)
 
 
-def move_to_find(search_f):
+def move_to_find(search_f, high):
     # okay buddy. Can't pass a point to move_to
-    move_to(locate(search_f))
+    move_to(locate(search_f, high))
 
 
 def pick_up():
     release()
-    move_to_find(find_obj)
+    move_to_find(find_obj, False)
     grip()
     time.sleep(2)
 
 
 def deposit():
-    move_to_find(find_dest)
+    move_to_find(find_dest, True)
     release()
 
 
