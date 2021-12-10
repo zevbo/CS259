@@ -49,6 +49,30 @@ def move_to_random(r_searching, search_range):
     return move_to(random_t_goal(r_searching, search_range), extra_legality=lambda angles: angles[1] < - math.pi / 4)
 
 
+dest_spottings = []
+
+
+def full_find(search_f, file="found.jpg"):
+    img = getImage()
+    result = search_f(img)
+    if result != None:
+        loc, big_contour = result
+        x, y, w, h = cv2.boundingRect(big_contour)
+        disp_image = cv2.rectangle(
+            img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        cv2.imwrite(file, disp_image)
+        img_x, img_y = loc
+        # ratio = tan(angle)
+        # max_pos = z_dist * tan(max_angle)
+        # TODO: make sure the x and y of the camera are oriented correctly
+        r_x = math.tan(maxHorAngle) * img_x / maxX
+        r_y = math.tan(maxVerAngle) * img_y / maxY
+        # r_y and r_x here switched because that's how the real coordinates are
+        return np.transpose(np.array([[-r_y * z, r_x * z, z, 1]])), curr_t()
+    else:
+        return False
+
+
 def search_for_with(search_f, r_searching, search_range, z):
     while True:
         found = move_to_random(r_searching, search_range)
@@ -57,32 +81,26 @@ def search_for_with(search_f, r_searching, search_range, z):
         time.sleep(1)
         getImage()
         time.sleep(12)
-        img = getImage()
-        result = search_f(img)
-        if result != None:
-            loc, big_contour = result
-            x, y, w, h = cv2.boundingRect(big_contour)
-            disp_image = cv2.rectangle(
-                img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            cv2.imwrite("found.jpg", disp_image)
-            img_x, img_y = loc
-            # ratio = tan(angle)
-            # max_pos = z_dist * tan(max_angle)
-            # TODO: make sure the x and y of the camera are oriented correctly
-            r_x = math.tan(maxHorAngle) * img_x / maxX
-            r_y = math.tan(maxVerAngle) * img_y / maxY
-            # r_y and r_x here switched because that's how the real coordinates are
-            return np.transpose(np.array([[-r_y * z, r_x * z, z, 1]])), curr_t()
+
+        dest_search = full_find(find_dest, file="found_dest.jpg")
+        if type(res) != bool:
+            dest_spottings.append(dest_search)
+
+        res = full_find(search_f)
+        if type(res) != bool:
+            return res
 
 
 obj_height = -180 - gripper_length
 dest_height = -225 - gripper_length
 
 
-def locate(search_f, height):
+def locate(search_f, height, use_dest_spottings):
     z1, z2 = symbols('z1, z2')
-    pos1, t_sb1 = search_for_with(search_f, r_searching_2, search_range1, z1)
-    pos2, t_sb2 = search_for_with(search_f, r_searching_3, search_range2, z2)
+    pos1, t_sb1 = dest_spottings[0] if use_dest_spottings and len(
+        dest_spottings) > 0 else search_for_with(search_f, r_searching_2, search_range1, z1)
+    pos2, t_sb2 = dest_spottings[1] if use_dest_spottings and len(
+        dest_spottings) > 1 else search_for_with(search_f, r_searching_3, search_range2, z2)
     # t_ab, meas_p_a, meas_p_b, z1, z2
     t_sc1 = np.dot(t_sb1, t_bc)
     t_sc2 = np.dot(t_sb2, t_bc)
@@ -95,9 +113,9 @@ def locate(search_f, height):
 clearance = 70
 
 
-def move_to_find(search_f, height, extra):
+def move_to_find(search_f, height, extra, use_dest_spottings):
     # okay buddy. Can't pass a point to move_to
-    t_goal = locate(search_f, height)
+    t_goal = locate(search_f, height, use_dest_spottings)
     t_goal[2][3] += extra
     t_intermdiate = np.array(t_goal)
     t_intermdiate[2][3] += clearance
@@ -107,13 +125,13 @@ def move_to_find(search_f, height, extra):
 
 def pick_up():
     release()
-    move_to_find(find_obj, obj_height, -10)
+    move_to_find(find_obj, obj_height, -10, False)
     grip()
     time.sleep(1)
 
 
 def deposit():
-    move_to_find(find_dest, dest_height, 50)
+    move_to_find(find_dest, dest_height, 50, True)
     release()
     time.sleep(1)
     t = curr_t()
