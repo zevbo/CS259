@@ -104,7 +104,7 @@ def move_to_find(search_f, height, extra):
 
 def pick_up():
     release()
-    move_to_find(find_obj, obj_height, -20)
+    move_to_find(find_obj, obj_height, -10)
     grip()
     time.sleep(1)
 
