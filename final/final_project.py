@@ -27,7 +27,7 @@ r_searching_1 = np.array([
     [0, 0, -1],
 ])
 # rotated a little bit from downards pointing
-angle = math.pi / 6
+angle = 0  # math.pi / 6
 r_searching_2 = np.dot(y_rotation(angle), r_searching_1)
 search_range = [-500, -175], [0, 600], [200, 450]
 
@@ -51,7 +51,7 @@ def search_for_with(search_f, r_searching, z):
             continue
         time.sleep(1)
         getImage()
-        time.sleep(10)
+        time.sleep(12)
         img = getImage()
         result = search_f(img)
         if result != None:
@@ -109,7 +109,7 @@ def pick_up():
 
 
 def deposit():
-    move_to_find(find_dest, dest_height, 60)
+    move_to_find(find_dest, dest_height, 50)
     release()
     time.sleep(1)
     t = curr_t()
