@@ -11,23 +11,19 @@ def value_of(exp, v1, v2):
     return exp.evalf(subs={v1: 1.0, v2: 0.0}) - exp.evalf(subs={v1: 0.0, v2: 0.0})
 
 
-def row(zero, z1, z2):
-    return [value_of(zero, z1, z2), value_of(zero, z2, z1)]
-
-
-def constant_of(exp, v1, v2):
-    return - exp.evalf(subs={v1: 0.0, v2: 0.0})
-
-
 def get_solution(t_sa, t_ab, meas_p_a, meas_p_b, z1, z2):
 
     meas_p_a2 = np.dot(t_ab, meas_p_b)
     zero_p = [a[0] for a in (meas_p_a2 - meas_p_a).tolist()[:-1]]
 
-    m = np.array([row(zero_p[0], z1, z2), row(
-        zero_p[1], z1, z2), row(zero_p[2], z1, z2)])
-    y = np.transpose(np.array(
-        [[constant_of(zero_p[0]), constant_of(zero_p[1]), constant_of(zero_p[2])]]))
+    def row(zero):
+        return [value_of(zero, z1, z2), value_of(zero, z2, z1)]
+
+    def constant_of(exp):
+        return [- exp.evalf(subs={z1: 0.0, z2: 0.0})]
+
+    m = np.array(list(map(row, zero_p)))
+    y = np.array(list(map(constant_of, zero_p)))
 
     x = np.dot(pseduo_inv(m), y)
 
