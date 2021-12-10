@@ -15,7 +15,7 @@ clearance = 1
 
 def move_to(t_goal, interval=5):
 
-    t_goal[2][3] = max(t_goal[2][3], 238)
+    t_goal[2][3] = max(t_goal[2][3], -238)
 
     topic = 'arm_controller/command' if params.on_gazebo else '/scaled_pos_joint_traj_controller/command'
     armCmd = rospy.Publisher(topic, JointTrajectory, queue_size=10)
