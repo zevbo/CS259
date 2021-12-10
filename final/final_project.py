@@ -70,8 +70,8 @@ def search_for_with(search_f, r_searching, z):
             return np.transpose(np.array([[-r_y * z, r_x * z, z, 1]])), curr_t()
 
 
-obj_height = -180
-dest_height = -225
+obj_height = -180 - gripper_length
+dest_height = -225 - gripper_length
 
 
 def locate(search_f, height):
@@ -103,7 +103,7 @@ def move_to_find(search_f, height, extra):
 
 def pick_up():
     release()
-    move_to_find(find_obj, obj_height, -40)
+    move_to_find(find_obj, obj_height, -20)
     grip()
     time.sleep(1)
 
