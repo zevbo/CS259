@@ -59,3 +59,8 @@ def move_to(t_goal, interval=5, extra_legality=(lambda _a: True)):
 
 def moveJoints(thetas):
     move_to(calc_tsb(thetas))
+
+
+def move_to_persistent(t_goal):
+    while(not(move_to(t_goal))):
+        continue

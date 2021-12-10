@@ -98,8 +98,8 @@ def move_to_find(search_f, height, extra):
     t_goal[2][3] += extra
     t_intermdiate = np.array(t_goal)
     t_intermdiate[2][3] += clearance
-    move_to(t_intermdiate)
-    move_to(t_goal, interval=2)
+    move_to_persistent(t_intermdiate)
+    move_to_persistent(t_goal, interval=2)
 
 
 def pick_up():
@@ -115,5 +115,6 @@ def deposit():
     time.sleep(1)
     t = curr_t()
     t[2][3] += clearance
-    move_to(t, interval=2)
-    move_to(calc_tsb(np.array([0, -math.pi / 2, 0, 0, -math.pi / 2, 0])))
+    move_to_persistent(t, interval=2)
+    move_to_persistent(
+        calc_tsb(np.array([0, -math.pi / 2, 0, 0, -math.pi / 2, 0])))
