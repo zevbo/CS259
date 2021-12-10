@@ -37,7 +37,7 @@ def get_solution(t_sa, t_ab, meas_p_a, meas_p_b, z1, z2):
 
 def get_solution_simple(t_sc, meas_p, z, high):
     p = np.dot(t_sc, meas_p)
-    return list(linsolve([p[2][0] + (190 if high else 212)], (z)))[0], p
+    return list(linsolve([p[2][0] + (212 if high else 240)], (z)))[0], p
 
 # def triangulate(t_ab, meas_p_a, meas_p_b, z1, z2):
 

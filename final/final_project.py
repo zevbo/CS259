@@ -75,6 +75,8 @@ def locate(search_f, high):
     # pos2, t_sb2 = search_for_with(search_f, r_searching_2)
     # t_ab, meas_p_a, meas_p_b, z1, z2
     t_sc1 = np.dot(t_sb1, t_bc)
+    print("t_sc1: ")
+    print(t_sc1)
     # t_sc2 = np.dot(t_sb2, t_bc)
     # t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
     p = triangulate(t_sc1, pos1, z1, high)
@@ -84,9 +86,10 @@ def locate(search_f, high):
 clearance = 40
 
 
-def move_to_find(search_f, high):
+def move_to_find(search_f, high, extra):
     # okay buddy. Can't pass a point to move_to
     t_goal = locate(search_f, high)
+    t_goal[2][3] += extra
     t_intermdiate = np.array(t_goal)
     t_intermdiate[2][3] += clearance
     move_to(t_intermdiate)
@@ -95,13 +98,13 @@ def move_to_find(search_f, high):
 
 def pick_up():
     release()
-    move_to_find(find_obj, False)
+    move_to_find(find_obj, True, 0)
     grip()
     time.sleep(1)
 
 
 def deposit():
-    move_to_find(find_dest, True)
+    move_to_find(find_dest, False, 60)
     release()
     time.sleep(1)
     t = curr_t()
