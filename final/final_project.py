@@ -1,4 +1,4 @@
-from triangulization import triangulate
+from triangulization import triangulate, triangulate2
 from stuff import *
 from moveTo import *
 from grip import *
@@ -27,8 +27,10 @@ r_searching_1 = np.array([
     [0, 0, -1],
 ])
 # rotated a little bit from downards pointing
-angle = 0  # math.pi / 6
-r_searching_2 = np.dot(y_rotation(angle), r_searching_1)
+angle2 = math.pi / 4
+r_searching_2 = np.dot(y_rotation(angle2), r_searching_1)
+angle3 = math.pi / 8
+r_searching_3 = np.dot(y_rotation(angle3), r_searching_1)
 search_range = [-500, -175], [0, 600], [200, 450]
 
 
@@ -77,14 +79,13 @@ dest_height = -225 - gripper_length
 def locate(search_f, height):
     z1, z2 = symbols('z1, z2')
     pos1, t_sb1 = search_for_with(search_f, r_searching_2, z1)
-    # pos2, t_sb2 = search_for_with(search_f, r_searching_2)
+    pos2, t_sb2 = search_for_with(search_f, r_searching_3, z2)
     # t_ab, meas_p_a, meas_p_b, z1, z2
     t_sc1 = np.dot(t_sb1, t_bc)
-    print("t_sc1: ")
-    print(t_sc1)
-    # t_sc2 = np.dot(t_sb2, t_bc)
-    # t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
-    p = triangulate(t_sc1, pos1, z1, height)
+    t_sc2 = np.dot(t_sb2, t_bc)
+    t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
+    # p = triangulate(t_sc1, pos1, z1, height)
+    p = triangulate2(t_sc1, t_ab, pos1, pos2, z1, z2)
     return r_and_shift_to_t(r_searching_1, p)
 
 
