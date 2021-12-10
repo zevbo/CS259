@@ -31,7 +31,7 @@ angle2 = math.pi / 6
 r_searching_2 = np.dot(y_rotation(angle2), r_searching_1)
 angle3 = math.pi / 6
 r_searching_3 = np.dot(y_rotation(angle3), r_searching_1)
-search_range = [-500, -175], [0, 600], [200, 450]
+search_range = [-500, -135], [0, 600], [200, 450]
 
 
 def random_search_pos():

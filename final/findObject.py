@@ -39,10 +39,10 @@ def find_centroid(mask):
     return (cx - maxX, cy - maxY), big_contour
 
 
-lower_red = np.array([0, 75, 50])
+lower_red = np.array([0, 75, 30])
 upper_red = np.array([10, 255, 255])
 
-lower_red2 = np.array([170, 75, 50])
+lower_red2 = np.array([170, 75, 30])
 upper_red2 = np.array([180, 255, 255])
 
 
