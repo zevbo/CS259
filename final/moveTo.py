@@ -13,14 +13,15 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 clearance = 1
 
 
-def move_to(t_goal, interval=5):
+def move_to(t_goal, interval=5, extra_legality=(lambda _a: True)):
 
     t_goal[2][3] = max(t_goal[2][3], -225)
 
     topic = 'arm_controller/command' if params.on_gazebo else '/scaled_pos_joint_traj_controller/command'
     armCmd = rospy.Publisher(topic, JointTrajectory, queue_size=10)
 
-    thetas = get_thetas_persistent(t_goal, curr_thetas())
+    thetas = get_thetas_persistent(
+        t_goal, curr_thetas(), extra_legality=extra_legality)
 
     if thetas is None:
         return False
