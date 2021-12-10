@@ -53,11 +53,12 @@ def find_obj(img):
     return find_centroid(mask0 + mask1)
 
 
-lower_green = np.array([50, 50, 25])
+lower_green = np.array([50, 50, 10])
 upper_green = np.array([70, 255, 255])
 
 
 def find_dest(img):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(img_hsv, lower_green, upper_green)
-    return find_centroid(mask), cv2.bitwise_and(img_hsv, img_hsv, mask=mask)
+    # , cv2.bitwise_and(img_hsv, img_hsv, mask=mask)
+    return find_centroid(mask)
