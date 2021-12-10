@@ -22,7 +22,8 @@ def get_solution(t_sa, t_ab, meas_p_a, meas_p_b, z1, z2):
     def constant_of(exp):
         return [- exp.evalf(subs={z1: 0.0, z2: 0.0})]
 
-    m = np.array(list(map(row, zero_p)))
+    m = np.array(list(map(row, zero_p)), dtype=float)
+    print(m)
     y = np.array(list(map(constant_of, zero_p)))
 
     x = np.dot(pseduo_inv(m), y)
