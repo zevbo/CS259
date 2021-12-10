@@ -56,7 +56,8 @@ def find_obj(img):
 
     mask = mask0 + mask1
 
-    return find_centroid(mask), cv2.bitwise_and(img_hsv, img_hsv, mask=mask)
+    # , cv2.bitwise_and(img_hsv, img_hsv, mask=mask)
+    return find_centroid(mask)
 
 
 lower_green = np.array([50, 50, 10])
