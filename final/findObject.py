@@ -34,7 +34,7 @@ def find_centroid(mask):
     cy = int(M["m01"] / M["m00"])
     x, y, w, h = cv2.boundingRect(big_contour)
     clearance = 2
-    if x <= clearance or y <= clearance or x + w >= maxX - clearance or y + h >= maxY - clearance:
+    if x <= clearance or y <= clearance or x + w >= maxX * 2 - clearance or y + h >= maxY * 2 - clearance:
         return None
     return (cx - maxX, cy - maxY), big_contour
 
