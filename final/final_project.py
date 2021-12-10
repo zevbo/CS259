@@ -69,7 +69,7 @@ def search_for_with(search_f, r_searching, z):
             return np.transpose(np.array([[-r_y * z, r_x * z, z, 1]])), curr_t()
 
 
-obj_height = 180
+obj_height = -180
 dest_height = -225
 
 
