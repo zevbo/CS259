@@ -43,7 +43,7 @@ def random_t_goal(r_searching):
 
 
 def move_to_random(r_searching):
-    return move_to(random_t_goal(r_searching), lambda angles: angles[1] < - math.pi / 4)
+    return move_to(random_t_goal(r_searching), extra_legality=lambda angles: angles[1] < - math.pi / 4)
 
 
 def search_for_with(search_f, r_searching, z):
