@@ -53,8 +53,8 @@ def find_obj(img):
     return find_centroid(mask0 + mask1)
 
 
-lower_green = np.array([50, 50, 25])
-upper_green = np.array([70, 255, 255])
+lower_green = np.array([54, 50, 40])
+upper_green = np.array([66, 255, 255])
 
 
 def find_dest(img):
