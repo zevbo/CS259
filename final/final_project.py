@@ -69,7 +69,11 @@ def search_for_with(search_f, r_searching, z):
             return np.transpose(np.array([[-r_y * z, r_x * z, z, 1]])), curr_t()
 
 
-def locate(search_f, high):
+obj_height = 180
+dest_height = -225
+
+
+def locate(search_f, height):
     z1, z2 = symbols('z1, z2')
     pos1, t_sb1 = search_for_with(search_f, r_searching_2, z1)
     # pos2, t_sb2 = search_for_with(search_f, r_searching_2)
@@ -79,16 +83,16 @@ def locate(search_f, high):
     print(t_sc1)
     # t_sc2 = np.dot(t_sb2, t_bc)
     # t_ab = np.dot(np.linalg.inv(t_sc1), t_sc2)
-    p = triangulate(t_sc1, pos1, z1, high)
+    p = triangulate(t_sc1, pos1, z1, height)
     return r_and_shift_to_t(r_searching_1, p)
 
 
 clearance = 40
 
 
-def move_to_find(search_f, high, extra):
+def move_to_find(search_f, height, extra):
     # okay buddy. Can't pass a point to move_to
-    t_goal = locate(search_f, high)
+    t_goal = locate(search_f, height)
     t_goal[2][3] += extra
     t_intermdiate = np.array(t_goal)
     t_intermdiate[2][3] += clearance
@@ -98,13 +102,13 @@ def move_to_find(search_f, high, extra):
 
 def pick_up():
     release()
-    move_to_find(find_obj, True, 0)
+    move_to_find(find_obj, obj_height, -40)
     grip()
     time.sleep(1)
 
 
 def deposit():
-    move_to_find(find_dest, False, 60)
+    move_to_find(find_dest, dest_height, 60)
     release()
     time.sleep(1)
     t = curr_t()

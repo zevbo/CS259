@@ -35,18 +35,18 @@ def get_solution(t_sa, t_ab, meas_p_a, meas_p_b, z1, z2):
 # returns real p_a
 
 
-def get_solution_simple(t_sc, meas_p, z, high):
+def get_solution_simple(t_sc, meas_p, z, height):
     p = np.dot(t_sc, meas_p)
-    return list(linsolve([p[2][0] + (212 if high else 240)], (z)))[0], p
+    return list(linsolve([p[2][0] + height], (z)))[0], p
 
 # def triangulate(t_ab, meas_p_a, meas_p_b, z1, z2):
 
 
-def triangulate(t_ab, meas_p_a, z1, high):
+def triangulate(t_ab, meas_p_a, z1, height):
     # meas_p_a = meas_p_a * z1
     # meas_p_b = meas_p_b * z2
     #sol = get_solution(t_ab, meas_p_a, meas_p_b, z1, z2)
-    sol, p = get_solution_simple(t_ab, meas_p_a, z1, high)
+    sol, p = get_solution_simple(t_ab, meas_p_a, z1, height)
     real_p = list(map(lambda el: 1 if el ==
                   1 else el[0].evalf(subs={z1: sol[0]}), p))
     real_p[1] -= 5
