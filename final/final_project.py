@@ -31,7 +31,7 @@ angle2 = math.pi / 5
 r_searching_2 = matmul(x_rotation(math.pi / 8),
                        y_rotation(angle2), r_searching_1)
 angle3 = math.pi / 7
-r_searching_3 = np.dot(x_rotation(math.pi / -8),
+r_searching_3 = matmul(x_rotation(math.pi / -8),
                        y_rotation(angle3), r_searching_1)
 search_range = [-500, -175], [0, 600], [200, 450]
 
