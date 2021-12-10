@@ -27,9 +27,9 @@ r_searching_1 = np.array([
     [0, 0, -1],
 ])
 # rotated a little bit from downards pointing
-angle2 = math.pi / 4
+angle2 = math.pi / 5
 r_searching_2 = np.dot(y_rotation(angle2), r_searching_1)
-angle3 = math.pi / 8
+angle3 = math.pi / 7
 r_searching_3 = np.dot(y_rotation(angle3), r_searching_1)
 search_range = [-500, -175], [0, 600], [200, 450]
 
