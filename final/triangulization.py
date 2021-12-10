@@ -18,7 +18,7 @@ def constant_of(exp, v1, v2):
     return - exp.evalf(subs={v1: 0.0, v2: 0.0})
 
 
-def get_solution(t_ab, meas_p_a, meas_p_b, z1, z2):
+def get_solution(t_sa, t_ab, meas_p_a, meas_p_b, z1, z2):
 
     meas_p_a2 = np.dot(t_ab, meas_p_b)
     zero_p = [a[0] for a in (meas_p_a2 - meas_p_a).tolist()[:-1]]
@@ -30,7 +30,7 @@ def get_solution(t_ab, meas_p_a, meas_p_b, z1, z2):
 
     x = np.dot(pseduo_inv(m), y)
 
-    return x[0]
+    return x[0], np.dot(t_sa, meas_p_a)
 
 # returns real p_a
 
