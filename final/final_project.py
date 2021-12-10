@@ -97,9 +97,8 @@ dest_height = -225 - gripper_length
 
 def add_z(result, z):
     pos, t = result
-    pos *= z
-    pos[3] = 1
-    return pos, t
+    new_pos = np.transpose(np.array([[pos[0] * z, pos[1] * z, pos[2] * z, 1]]))
+    return new_pos, t
 
 
 def locate(search_f, height, use_dest_spottings):
