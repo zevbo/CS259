@@ -34,7 +34,7 @@ angle3 = math.pi / 4
 r_searching_3 = matmul(x_rotation(math.pi / -35),
                        y_rotation(angle3), r_searching_1)
 search_range1 = [-500, -325], [0, 600], [200, 450]
-search_range2 = [-325, -175], [0, 600], [200, 450]
+search_range2 = [-325, -75], [0, 600], [200, 450]
 
 
 def random_search_pos(search_range):
@@ -138,7 +138,7 @@ def pick_up():
 
 
 def deposit():
-    move_to_find(find_dest, dest_height, 50, True)
+    move_to_find(find_dest, dest_height, 70, True)
     release()
     time.sleep(1)
     t = curr_t()
