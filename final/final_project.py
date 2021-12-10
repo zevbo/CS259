@@ -52,7 +52,7 @@ def move_to_random(r_searching, search_range):
 dest_spottings = []
 
 
-def full_find(search_f, file="found.jpg"):
+def full_find(search_f, z, file="found.jpg"):
     img = getImage()
     result = search_f(img)
     if result != None:
@@ -82,11 +82,11 @@ def search_for_with(search_f, r_searching, search_range, z):
         getImage()
         time.sleep(12)
 
-        dest_search = full_find(find_dest, file="found_dest.jpg")
+        dest_search = full_find(find_dest, 1, file="found_dest.jpg")
         if type(dest_search) != bool:
             dest_spottings.append(dest_search)
 
-        res = full_find(search_f)
+        res = full_find(search_f, z)
         if type(res) != bool:
             return res
 
@@ -95,11 +95,18 @@ obj_height = -180 - gripper_length
 dest_height = -225 - gripper_length
 
 
+def add_z(result, z):
+    pos, t = result
+    pos *= z
+    pos[3] = 1
+    return pos, t
+
+
 def locate(search_f, height, use_dest_spottings):
     z1, z2 = symbols('z1, z2')
-    pos1, t_sb1 = dest_spottings[0] if use_dest_spottings and len(
+    pos1, t_sb1 = add_z(dest_spottings[0], z1) if use_dest_spottings and len(
         dest_spottings) > 0 else search_for_with(search_f, r_searching_2, search_range1, z1)
-    pos2, t_sb2 = dest_spottings[1] if use_dest_spottings and len(
+    pos2, t_sb2 = add_z(dest_spottings[1], z2) if use_dest_spottings and len(
         dest_spottings) > 1 else search_for_with(search_f, r_searching_3, search_range2, z2)
     # t_ab, meas_p_a, meas_p_b, z1, z2
     t_sc1 = np.dot(t_sb1, t_bc)
