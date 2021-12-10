@@ -27,30 +27,31 @@ r_searching_1 = np.array([
     [0, 0, -1],
 ])
 # rotated a little bit from downards pointing
-angle2 = math.pi / 5
+angle2 = math.pi / 9
 r_searching_2 = matmul(x_rotation(math.pi / 35),
                        y_rotation(angle2), r_searching_1)
-angle3 = math.pi / 7
+angle3 = math.pi / 4
 r_searching_3 = matmul(x_rotation(math.pi / -35),
                        y_rotation(angle3), r_searching_1)
-search_range = [-500, -175], [0, 600], [200, 450]
+search_range1 = [-500, -325], [0, 600], [200, 450]
+search_range2 = [-325, -175], [0, 600], [200, 450]
 
 
-def random_search_pos():
+def random_search_pos(search_range):
     return np.array(list(map(lambda range: random.uniform(*range), search_range)))
 
 
-def random_t_goal(r_searching):
-    return r_and_shift_to_t(r_searching, random_search_pos())
+def random_t_goal(r_searching, search_range):
+    return r_and_shift_to_t(r_searching, random_search_pos(search_range))
 
 
-def move_to_random(r_searching):
-    return move_to(random_t_goal(r_searching), extra_legality=lambda angles: angles[1] < - math.pi / 4)
+def move_to_random(r_searching, search_range):
+    return move_to(random_t_goal(r_searching, search_range), extra_legality=lambda angles: angles[1] < - math.pi / 4)
 
 
-def search_for_with(search_f, r_searching, z):
+def search_for_with(search_f, r_searching, search_range, z):
     while True:
-        found = move_to_random(r_searching)
+        found = move_to_random(r_searching, search_range)
         if not found:
             continue
         time.sleep(1)
@@ -80,8 +81,8 @@ dest_height = -225 - gripper_length
 
 def locate(search_f, height):
     z1, z2 = symbols('z1, z2')
-    pos1, t_sb1 = search_for_with(search_f, r_searching_2, z1)
-    pos2, t_sb2 = search_for_with(search_f, r_searching_3, z2)
+    pos1, t_sb1 = search_for_with(search_f, r_searching_2, search_range1, z1)
+    pos2, t_sb2 = search_for_with(search_f, r_searching_3, search_range2, z2)
     # t_ab, meas_p_a, meas_p_b, z1, z2
     t_sc1 = np.dot(t_sb1, t_bc)
     t_sc2 = np.dot(t_sb2, t_bc)

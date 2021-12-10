@@ -26,6 +26,10 @@ def get_solution(t_sa, t_ab, meas_p_a, meas_p_b, z1, z2):
     print(m)
     y = np.array(list(map(constant_of, zero_p)))
 
+    print("inverting: ")
+    print(np.dot(m, np.transpose(m)))
+    print("##")
+    print(str(m))
     x = np.dot(pseduo_inv(m), y)
 
     return x[0], np.dot(t_sa, meas_p_a)
