@@ -83,7 +83,7 @@ def search_for_with(search_f, r_searching, search_range, z):
         time.sleep(12)
 
         dest_search = full_find(find_dest, file="found_dest.jpg")
-        if type(res) != bool:
+        if type(dest_search) != bool:
             dest_spottings.append(dest_search)
 
         res = full_find(search_f)
